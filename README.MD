@@ -1,20 +1,10 @@
-Init:
+Set up ssh alias "smart" (with no pass on ssh key) in ~/.ssh/config
 
-Set up ssh alias "smart" (with no pass on ssh key)
+Run "./setup.sh"
 
-Run this on server:
+Run "./build.sh && ./deploy.sh"
 
-    mkdir -p /srv/flexit_web/
+If you have another name for the server in ssh/config you can put that after the deploy script,
+i.e. `./build.sh && ./deploy.sh <my server name>`
 
-Start by installing it as a service in a system that has systemd
-installed:
-
-    systemctl enable /srv/flexit_web/flexit_web.service
-
-And start the service:
-
-    systemctl start flexit_web
-
-And check the logs that everything went ok:
-
-    journalctl -u flexit_web # add -f to continuously print new entries
+PS: This project uses git submodules for it's go
