@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lillesveiven 5</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        h6 small {
+            font-size: 80%;
+            font-weight: 400;
+            padding-left: 1rem;
+            color: grey;
+        }
+    </style>
+    <script>/* IE9+ ajax: atto({url: '/', method: 'GET', data: '', headers: {key: 'value'}}) .done(...) .error(...).finally(...) */
+    window.atto=function(e){var n,r,t,o=new XMLHttpRequest;o.open(e.method||"GET",e.url,!0),o.onload=function(){o.status>=200&&o.status<400?n&&n(o.responseText,o):r&&r(new Error(o.responseText||o.statusText),o),t&&t(null,o)};for(var s in e.headers)e.headers.hasOwnProperty(s)&&o.setRequestHeader(s,e.headers[s]);return o.onerror=function(){var e=new Error("Connection error");r&&r(e,{}),t&&t(e)},setTimeout(function(){o.send(e.data)}),{done:function(e){return n=e,this},error:function(e){return r=e,this},finally:function(e){return t=e,this}}};
+    </script>
+    </head>
+<body>
+<div class="container">
+    <label class="custom-control custom-checkbox">
+      <input type="checkbox" id="showAllCheckbox" class="custom-control-input">
+      <span class="custom-control-indicator"></span>
+      <span class="custom-control-description">Show all</span>
+    </label>
+    <h1>Holding Registers</h1>
+    <ul id="holdingRegisters" class="list-group"></ul>
+    <h1>Input Registers</h1>
+    <ul id="inputRegisters" class="list-group"></ul>
+</div>
+<script src="main.js"></script>
+<script src="holdingRegisters.js"></script>
+<script src="inputRegisters.js"></script>
+</body>
+</html>
