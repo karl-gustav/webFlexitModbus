@@ -1,10 +1,17 @@
-Set up ssh alias "smart" (with no pass on ssh key) in ~/.ssh/config
+Purpose
+=======
+This app uses the https://github.com/karl-gustav/flexitModbus library to talk to a flexit
+ventilation system over Modbus (RS485 serial USB interface) and exposes that as a web API
 
-Run "./setup.sh"
+Preconditions
+=============
+Set up ssh alias "smart" (with no pass on ssh key) in ~/.ssh/config or change SSH_SERVER
+in the Makefile
 
-Run "./build.sh && ./deploy.sh"
+Setup
+=====
+Run `make setup` to do the first time setup to create the folders and setup the service.
 
-If you have another name for the server in ssh/config you can put that after the deploy script,
-i.e. `./build.sh && ./deploy.sh <my server name>`
-
-PS: This project uses git submodules for it's go
+Deploy
+======
+Run `make deploy` to deploy the executable to the server

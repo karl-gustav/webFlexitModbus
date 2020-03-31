@@ -1,0 +1,9 @@
+github.com/Karl-Gustav/flexitModbus v0.0.0-20190612104034-0e80030d5654/go.mod h1:+7nefh+60dfnEJACUPOuSeOb5Cf3nVapfQ1ZXBUUDQE=
+github.com/goburrow/modbus v0.1.0 h1:DejRZY73nEM6+bt5JSP6IsFolJ9dVcqxsYbpLbeW/ro=
+github.com/goburrow/modbus v0.1.0/go.mod h1:Kx552D5rLIS8E7TyUwQ/UdHEqvX5T8tyiGBTlzMcZBg=
+github.com/goburrow/serial v0.1.0 h1:v2T1SQa/dlUqQiYIT8+Cu7YolfqAi3K96UmhwYyuSrA=
+github.com/goburrow/serial v0.1.0/go.mod h1:sAiqG0nRVswsm1C97xsttiYCzSLBmUZ/VSlVLZJ8haA=
+github.com/gorilla/mux v1.7.4 h1:VuZ8uybHlWmqV03+zRzdwKL4tUnIp1MAQtp1mIFE1bc=
+github.com/gorilla/mux v1.7.4/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
+github.com/karl-gustav/flexitModbus v0.0.0-20200329201917-f48154c4c1b6 h1:S+VH5djFcmhcjfegwaUl1PU0by/61wNbKMCmCoru8bQ=
+github.com/karl-gustav/flexitModbus v0.0.0-20200329201917-f48154c4c1b6/go.mod h1:CyK8iU3M+jvSNBJ6uBdZv2s4ysvGjmFZ6QkXrpCubog=

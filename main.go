@@ -2,34 +2,49 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 
-	"github.com/Karl-Gustav/flexitModbus"
+	"github.com/goburrow/modbus"
 	"github.com/gorilla/mux"
-)
-
-const (
-	PORT = "8080"
+	"github.com/karl-gustav/flexitModbus"
 )
 
 func main() {
+	var serialDevice = flag.String("s", "/dev/ttyUSB0", "serial RS485 device for modbus communication")
+	var port = flag.String("p", "8080", "port to run the webserver on")
+	flag.Parse()
+
+	flexitModbus.Setup(func() *modbus.RTUClientHandler {
+		handler := modbus.NewRTUClientHandler(*serialDevice)
+		handler.BaudRate = 9600
+		handler.DataBits = 8
+		handler.Parity = "E" // "E"ven, "O"dd, "N"o parity
+		handler.StopBits = 1
+		handler.SlaveId = 1
+		handler.Timeout = 1 * time.Second
+		// handler.Logger = log.New(os.Stdout, "", log.LstdFlags)
+		return handler
+	})
+
 	r := mux.NewRouter()
-	r.HandleFunc("/", fileHandler("index.html")).Methods("GET")
-	r.HandleFunc("/main.css", fileHandler("main.css")).Methods("GET")
-	r.HandleFunc("/main.js", fileHandler("main.js")).Methods("GET")
-	r.HandleFunc("/inputRegisters.js", fileHandler("inputRegisters.js")).Methods("GET")
-	r.HandleFunc("/holdingRegisters.js", fileHandler("holdingRegisters.js")).Methods("GET")
+	r.HandleFunc("/", fileHandler("html/index.html")).Methods("GET")
+	r.HandleFunc("/main.css", fileHandler("html/main.css")).Methods("GET")
+	r.HandleFunc("/main.js", fileHandler("html/main.js")).Methods("GET")
+	r.HandleFunc("/inputRegisters.js", fileHandler("html/inputRegisters.js")).Methods("GET")
+	r.HandleFunc("/holdingRegisters.js", fileHandler("html/holdingRegisters.js")).Methods("GET")
 	r.HandleFunc("/api/holdingregisters", getHoldingRegisters).Methods("GET")
 	r.HandleFunc("/api/holdingregisters/{name}", getHoldingRegister).Methods("GET")
 	r.HandleFunc("/api/holdingregisters/{name}", setHoldingRegister).Methods("PATCH", "PUT")
 	r.HandleFunc("/api/inputregisters", getInputRegisters).Methods("GET")
 	r.HandleFunc("/api/inputregisters/{name}", getInputRegister).Methods("GET")
 
-	log.Println("Started server on port", PORT)
-	http.ListenAndServe(":"+PORT, r)
+	log.Printf("Started server on http://localhost:%s with serial device %s\n", *port, *serialDevice)
+	log.Fatal(http.ListenAndServe(":"+*port, r))
 }
 
 func getInputRegister(w http.ResponseWriter, r *http.Request) {
