@@ -29,10 +29,10 @@ export DEPLOY_CMD
 define SETUP_CMD
 echo Making directory \
 	&& sudo mkdir -p /srv/$(SERVICE_NAME)/ \
-	&& echo ≫ Creating service file \
-	&& sudo cat > /srv/$(SERVICE_NAME)/$(SERVICE_NAME).service \
 	&& echo ≫ Setting folder permissions \
 	&& sudo chown $$USER -R /srv/$(SERVICE_NAME)/ \
+	&& echo ≫ Creating service file \
+	&& cat > /srv/$(SERVICE_NAME)/$(SERVICE_NAME).service \
 	&& echo ≫ Enabling service \
 	&& sudo sudo systemctl enable /srv/$(SERVICE_NAME)/$(SERVICE_NAME).service \
 	&& sudo systemctl daemon-reload
