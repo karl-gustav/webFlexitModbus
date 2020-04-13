@@ -4,11 +4,10 @@ SSH_SERVER=smart
 test::
 	go test ./...
 build::
-	GOOS=linux GOARCH=arm GOARM=6 go build -o $(SERVICE_NAME) main.go
+	GOOS=linux GOARCH=arm GOARM=6 go build -o $(SERVICE_NAME)
 deploy:: build
 	@tar czf - $(SERVICE_NAME) html/ | ssh $(SSH_SERVER) "$$DEPLOY_CMD"
 setup::
-	echo "Running command on $(SSH_SERVER): $$SETUP_CMD"
 	echo "$$SERVICE_FILE" | ssh $(SSH_SERVER) "$$SETUP_CMD"
 
 define DEPLOY_CMD
@@ -18,7 +17,6 @@ echo ≫ Backing up old executable...\
 	&& echo ≫ Extracting into /srv/$(SERVICE_NAME)/...\
 	;  tar xzf - -C /srv/$(SERVICE_NAME)/\
 	&& echo ≫ Restarting service...\
-	&& sudo systemctl daemon-reload\
 	&& sudo service $(SERVICE_NAME) restart\
 	&& echo ≫ Checking status...\
 	&& sudo service $(SERVICE_NAME) status\
