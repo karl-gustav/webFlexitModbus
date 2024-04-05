@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/goburrow/modbus"
@@ -15,12 +15,13 @@ import (
 )
 
 func main() {
-	var serialDevice = flag.String("s", "/dev/ttyUSB0", "serial RS485 device for modbus communication")
-	var port = flag.String("p", "8080", "port to run the webserver on")
-	flag.Parse()
+	var serialDevice = os.Getenv("SERIAL_DEVICE") // serial RS485 device for modbus communication
+	if serialDevice == "" {
+		serialDevice = "/dev/ttyUSB0"
+	}
 
 	flexitModbus.Setup(func() *modbus.RTUClientHandler {
-		handler := modbus.NewRTUClientHandler(*serialDevice)
+		handler := modbus.NewRTUClientHandler(serialDevice)
 		handler.BaudRate = 9600
 		handler.DataBits = 8
 		handler.Parity = "E" // "E"ven, "O"dd, "N"o parity
@@ -43,8 +44,12 @@ func main() {
 	r.HandleFunc("/api/inputregisters", getInputRegisters).Methods("GET")
 	r.HandleFunc("/api/inputregisters/{name}", getInputRegister).Methods("GET")
 
-	log.Printf("Started server on http://localhost:%s with serial device %s\n", *port, *serialDevice)
-	log.Fatal(http.ListenAndServe(":"+*port, r))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	log.Printf("Started server on http://localhost:%s with serial device %s\n", port, serialDevice)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
 func getInputRegister(w http.ResponseWriter, r *http.Request) {
